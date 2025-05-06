@@ -1,7 +1,7 @@
-import React, { type ReactElement, type ReactNode } from "react"
+import React, { type ReactNode } from "react"
 import type { Metadata } from "next"
 import { getServerSession } from "next-auth/next"
-import { redirect } from "next/navigation"
+// import { redirect } from "next/navigation"      // ← remove redirect import
 import { authOptions } from "@/lib/auth"
 import { AdminSidebar } from "@/components/admin/sidebar"
 import { AdminHeader } from "@/components/admin/header"
@@ -12,29 +12,13 @@ export const metadata: Metadata = {
   description: "Sikkim Global Technical University Admin Dashboard",
 }
 
-type ChildProps = {
-  childProp?: {
-    segment?: string
-  }
-}
-
 export default async function AdminLayout({
   children,
 }: {
   children: ReactNode
 }) {
+  // still grab session for UI, but do NOT redirect here:
   const session = await getServerSession(authOptions)
-
-  // figure out if the child route is the login page
-  let childSegment: string | undefined
-  if (React.isValidElement(children)) {
-    const props = (children as ReactElement<ChildProps>).props
-    childSegment = props.childProp?.segment
-  }
-
-  if (!session && childSegment !== "login") {
-    redirect("/admin/login")
-  }
 
   return (
     <div className="flex min-h-screen bg-background">
