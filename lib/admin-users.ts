@@ -1,8 +1,8 @@
 export const adminUsers = [
   {
     id: "1",
-    name: "Admin User",
-    email: "admin@sgtu.edu.in",
+    name: "Abdul Khalid",
+    email: "ice40125@gmail.com",
     password: "admin123",
     role: "admin",
   },
